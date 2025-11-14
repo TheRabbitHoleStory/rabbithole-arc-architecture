@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyUnsupportedRegions",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:RequestedRegion": [
+            "us-east-1",
+            "us-east-2"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyHighRiskServices",
+      "Effect": "Deny",
+      "Action": [
+        "es:*",
+        "opensearch:*",
+        "kinesis:*",
+        "redshift:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
