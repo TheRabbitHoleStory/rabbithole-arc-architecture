@@ -1,0 +1,13 @@
+flowchart LR
+  U[User Browser (Twine + YT)] -->|fetch()| APIGW[API Gateway REST]
+  APIGW --> L1[Lambda: TalkToCharacter (Bedrock)]
+  L1 --> BR[Amazon Bedrock]
+  BR --> L1 --> APIGW --> U
+
+  U -->|start analysis| APIGW2[API Gateway: StartRekognition]
+  APIGW2 --> L2[Lambda: StartLabelDetection]
+  L2 --> REK[Amazon Rekognition]
+  REK --> SNS[SNS JobComplete]
+  SNS --> L3[Lambda: GetRekognitionResults]
+  L3 --> APIGW3[API Gateway: GetRekognitionResults]
+  APIGW3 --> U
